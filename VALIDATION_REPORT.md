@@ -1,15 +1,42 @@
-# Current implementation checkpoint — 0.9.1-review
+# Current validation — 0.9.1-review
 
-November 16, 2026 (America/Chicago). The dedicated GitHub repository has been created. Code commit, hosted verification and Pages deployment are pending at this pre-commit checkpoint.
+November 16, 2026 (America/Chicago). **Code-only review site deployed; production data remains blocked.**
 
-- Re-ran the test suite: **3,124 assertions passed**, including the observed scalar-filter semicolon defect. Structural validator: **0 errors**. Production-data gate remains blocked.
-- Opened the app in the available Chromium browser at the managed local preview. Observed successful startup, visible Esri street-map tiles, zoom/fit/layer controls and application disclaimer.
-- Imported the separate 42-record review JSON using the browser file picker. Observed **42 results, 0 mapped, 42 requiring verification**, all listed under Missing coordinates; 32 source statuses count as collected/data and remain unverified.
-- Observed the new Open review file control after reload.
-- Browser log inspection found a browser-extension metadata error, with no application-origin error in that inspected log window.
-- Not yet verified: GitHub Actions execution, GitHub Pages deployment, hosted-origin session import, clustering with actual coordinates, mobile/tablet behavior, resource viewers, custom domain, live 404 recovery or authoritative source correctness.
+- Repository: https://github.com/christopherschaefer11-hub/Martin-Marietta-Atlas
+- Live URL: https://christopherschaefer11-hub.github.io/Martin-Marietta-Atlas/
+- Application commit tested: `955191985434cf9e41acc9d5fc82b8c3959db35f`.
+- Pages source: `main`, repository root, HTTPS enabled. No client records or private-review files are committed.
+- Code CI succeeded: https://github.com/christopherschaefer11-hub/Martin-Marietta-Atlas/actions/runs/43997921645
+- Pages deployment succeeded: https://github.com/christopherschaefer11-hub/Martin-Marietta-Atlas/actions/runs/43998060020
 
-The initial report below is historical evidence; its browser-access limitations have been partly superseded by the checks above.
+## Checks completed in this continuation
+
+| Check | Observed result |
+| --- | --- |
+| Core regression tests | 3,124 assertions passed, including 2,048 filter combinations and the scalar-semicolon regression |
+| Syntax and structural checks | Passed; zero structural errors; production-data gate still blocked |
+| GitHub source integrity | All 21 committed blob hashes matched local file bytes; no extra files |
+| Hosted subdirectory startup | Map and UI initialized at the actual Pages project URL |
+| Basemap | Esri street-map tiles visibly rendered with attribution and scale |
+| Hosted review import | File picker imported the separate JSON: 42 records, 0 map pins, 42 verification flags; no source directory committed |
+| Combined filters and case-insensitive search | KS + Scheduled or requested + QUARRY returned 2 records, matching an independent data check |
+| Confidence filter | Complete semicolon-containing value remained one option and retained the 2 expected results |
+| Missing-coordinate details | Selected record opened complete details, source conflict flags and disclaimer without a fabricated pin |
+| Conditional action buttons | Zero resource buttons for the inspected record with no approved links |
+| Keyboard Escape | Closed the detail panel |
+| JSON and CSV downloads | Both browser downloads completed; independently parsed each exported file and confirmed 2 filtered records |
+| Empty results | GLB-only constraint returned zero results, an explanatory message, and disabled exports |
+| Restore registry | Cleared imported records, filters and details; returned to zero-record public registry |
+| Browser console inspection | Returned log window contained extension metadata errors, with no observed application-origin error |
+| Live UI evidence | Screenshot captured after clearing private review data |
+
+Browser testing used the available desktop Chromium surface (1363 x 938 screenshot). No mobile-device or tablet claim is made. The map has no real site markers because no approved facility coordinates were supplied. Header collected/data count of 32 after import reflects unverified prototype statuses, not confirmed usable datasets.
+
+## Still unverified / blocked
+
+Workbook active-location completeness; facility coordinates and addresses; datum/CRS; collection dates/status and resource availability; client/management publication approval; clustering and map/list synchronization with actual coordinate records; mobile/tablet behavior and complete keyboard traversal; every filter combination in a browser; actual KML/GLB loading, geometry, units, orientation and scale; live resource links; custom domain; live 404 recovery; actual browser blocking of dependencies. Dependency failures and all filter subsets are covered only by the existing automated logic checks.
+
+The historical initial-delivery report below records earlier checks and environment failures. Its blanket browser-access limitation is superseded only for the specific observed checks above. A documentation-only follow-up records these results without altering the tested application files.
 
 ---
 

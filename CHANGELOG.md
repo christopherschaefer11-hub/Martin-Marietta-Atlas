@@ -5,7 +5,7 @@
 - Added a visible Open review file entry point and browser-session review on hosted URLs; imports do not write to GitHub or a server. Unapproved bundled records remain rejected.
 - Fixed scalar filter values containing semicolons so complete confidence labels remain selectable.
 - Added GitHub Actions syntax, regression and structural checks with a commit-pinned checkout action.
-- Re-ran 3,124 assertions and structural checks. Observed desktop map startup, street basemap tiles and all 42 private-review rows in a browser.
+- Re-ran 3,124 assertions and structural checks; GitHub Actions passed. Published the code-only review site from main/root. Verified hosted startup, street basemap, 42-record session import, combined filters, missing-coordinate details, JSON/CSV downloads and clearing the session.
 - Workbook, approved coordinates/resources and production-data release remain unresolved.
 
 ## 0.9.0-review — 2026-11-16

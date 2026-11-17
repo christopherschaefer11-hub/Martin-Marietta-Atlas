@@ -1,6 +1,8 @@
 # Martin Marietta Data Collection Atlas
 
-**Delivery status: working application source; production data release blocked.** The workbook, actual KML files, GLB models and publication approvals were not supplied. Desktop map startup and the 42-record review import have now been exercised in a browser. The application is not yet a verified production data release. See `VALIDATION_REPORT.md` for performed checks and remaining checks.
+[Open the live review atlas](https://christopherschaefer11-hub.github.io/Martin-Marietta-Atlas/) · [Repository](https://github.com/christopherschaefer11-hub/Martin-Marietta-Atlas)
+
+**Delivery status: working application source; production data release blocked.** The workbook, actual KML files, GLB models and publication approvals were not supplied. The GitHub Pages review site is live. Desktop map startup, 42-record session import, combined filters, missing-coordinate details, exports and session clearing have been exercised on the hosted site. The application is not yet a verified production data release. See `VALIDATION_REPORT.md` for performed checks and remaining checks.
 
 The public repository contains **no unapproved site records**. All **42** supplied prototype records are preserved in the separately delivered `mm-atlas-private-review.json`, after removing approximate coordinates, personal contacts, operating notes and unapproved resource URLs. That private review file must remain outside this repository and its Git history. This is not a substitute for workbook reconciliation. The empty bundled registry is an explicit release boundary, not a smaller sample directory.
 
