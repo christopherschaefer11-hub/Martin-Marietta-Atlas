@@ -1,0 +1,22 @@
+# Keep source workbooks, private review imports, credentials and technical data outside this repository.
+*.xlsx
+*.xls
+*.las
+*.laz
+*.e57
+*.copc
+*.dwg
+*.dxf
+*.rvt
+*.env
+.env*
+*.pem
+*.key
+private-review/
+*-private-review.json
+*-private-review.csv
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db
+# .gitignore is not a security boundary; inspect staged files and history.

@@ -1,0 +1,32 @@
+name: Atlas checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: JavaScript syntax and behavior
+        run: |
+          node --check assets/js/atlas-core.js
+          node --check assets/js/atlas.js
+          node tests/core.test.cjs
+      - name: Repository and publication checks
+        run: python3 tools/validate_release.py --structural-only
+      - name: Report production-data readiness
+        shell: bash
+        run: |
+          set +e
+          python3 tools/validate_release.py
+          status=$?
+          if [ "$status" = 2 ]; then
+            echo '::notice::Application checks passed; production data is awaiting workbook reconciliation and publication review.'
+            exit 0
+          fi
+          exit "$status"

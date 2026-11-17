@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Martin Marietta geospatial data discovery and visualization atlas.">
+  <title>Martin Marietta Data Collection Atlas</title>
+  <link rel="icon" href="assets/icons/atlas.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="assets/css/atlas.css">
+  <style>#startup{padding:16px;background:#fff4dc;color:#242d36;border-bottom:2px solid #a96800}#startup[hidden]{display:none}</style>
+  <script>
+    window.setTimeout(function(){var el=document.getElementById('startup');if(!window.MM_ATLAS_READY&&el){el.hidden=false;el.setAttribute('role','alert');el.textContent='Atlas startup did not finish. Check your connection and allow the required libraries; confirm data/sites.js and assets/js/atlas.js are present. Reload to try again.';}},15000);
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script defer src="data/sites.js"></script>
+  <script defer src="assets/js/atlas-core.js"></script>
+  <script defer src="assets/js/atlas.js"></script>
+</head>
+<body>
+  <a class="skip" href="#search">Skip to site search</a>
+  <div id="app">
+    <header class="header">
+      <button id="menuBtn" class="btn mobile-only" aria-controls="sidebar" aria-expanded="false">Sites &amp; filters</button>
+      <div class="title"><h1>Martin Marietta Data Collection Atlas</h1><p>Midwest Collection Coverage</p></div>
+      <div class="metrics" aria-label="Atlas summary">
+        <div class="metric"><b id="totalCount">—</b><span>Total sites</span></div>
+        <div class="metric"><b id="dataCount">—</b><span>Collected / data</span></div>
+        <div class="metric"><b id="verifyCount">—</b><span>Requires verification</span></div>
+      </div>
+      <div class="header-actions"><button class="btn" id="resetMap">Reset map</button><button class="btn" id="fitVisible">Fit visible sites</button></div>
+    </header>
+    <div id="startup" role="status">Loading atlas… If this message remains, check the required libraries and site registry.</div>
+    <noscript><p class="notice">JavaScript is required for the map and filters. Enable it and reload.</p></noscript>
+    <div id="releaseNotice" class="notice" hidden></div>
+    <div class="layout">
+      <button id="drawerShade" class="drawer-shade" aria-label="Close site search" hidden tabindex="-1"></button>
+      <aside class="sidebar" id="sidebar" aria-label="Site search and filters">
+        <div class="sidebar-inner">
+          <div class="mobile-only drawer-head"><strong>Site directory</strong><button id="closeDrawer" class="btn">Close</button></div>
+          <section class="section"><label for="search"><b>Search sites</b></label><input id="search" class="search" type="search" placeholder="Site, project, city, method, dataset…" autocomplete="off"></section>
+          <section class="section"><div class="results-head"><h2>Filters</h2><button class="btn small" id="clearFilters">Clear all</button></div><div class="filter-grid" id="filterGrid"></div>
+            <div class="checks">
+              <label><input type="checkbox" id="fVerify"> Requires verification</label>
+              <label><input type="checkbox" id="fGlb"> GLB available</label>
+              <label><input type="checkbox" id="fPc"> Point-cloud link</label>
+              <label><input type="checkbox" id="fKml"> KML available</label>
+              <label><input type="checkbox" id="fFolder"> Project-folder resource</label>
+            </div>
+          </section>
+          <details class="section"><summary>Legend &amp; data quality</summary><h2>Collection status</h2><div id="legend" class="legend"></div><p class="sub">A red outline adds a verification warning without changing the status color. Purple shows requested KML geometry.</p><h2>Data quality</h2><div id="dqSummary" class="sub"></div></details>
+          <details class="section" id="transferPanel"><summary>Import / export</summary><div class="file-controls"><label class="btn small file-label" for="registryFile">Import JSON / CSV<input id="registryFile" type="file" accept=".json,.csv,application/json,text/csv"></label><button id="restoreRegistry" class="btn small">Restore bundled registry</button><button id="exportCsv" class="btn small">Export results CSV</button><button id="exportJson" class="btn small">Export results JSON</button></div><p class="sub" id="importHelp">Imports stay in memory until refresh; they do not change the published registry. File review also works on the hosted atlas. Choose only files approved for this browser environment; imported records are not uploaded by the application.</p></details>
+          <section aria-label="Search results"><div class="results-head"><h2>Sites</h2><span id="visibleCount" class="sub" role="status" aria-live="polite"></span></div><button class="btn small" id="fitResults">Fit map to results</button><p id="noResults" class="empty" hidden>No matching sites. Clear filters or revise the search.</p><div id="siteList" class="site-list"></div></section>
+        </div>
+      </aside>
+      <main class="map-wrap" aria-label="Atlas map and site details">
+        <div id="map" aria-label="Location map" tabindex="0"></div>
+        <section id="reviewWelcome" class="review-welcome" aria-labelledby="reviewTitle" hidden><p class="eyebrow">DIRECTORY REVIEW</p><h2 id="reviewTitle">Open your site directory</h2><p>Review a JSON or CSV file from your device. It stays in this browser tab and does not change the public atlas.</p><button id="openReview" class="btn primary">Open review file</button><p class="sub">No installation needed. Refresh or restore the bundled registry to clear the session. Workbook reconciliation and publication approval are still required.</p></section>
+        <div id="mapMessage" class="map-message" role="status" hidden></div>
+        <section id="kmlControl" class="kml-control" aria-label="KML overlay" hidden><strong id="kmlName"></strong><p>Approximate location or extent. Not an authoritative property boundary.</p><label><input id="kmlVisible" type="checkbox" checked> Show overlay</label><button id="removeKml" class="btn small">Remove KML</button></section>
+        <section id="siteDetail" class="detail-panel" aria-labelledby="detailTitle" hidden><div class="detail-head"><h2 id="detailTitle" tabindex="-1">Site details</h2><button id="closeDetail" class="btn small" aria-label="Close site details">Close</button></div><div id="detailBody"></div></section>
+      </main>
+    </div>
+    <footer class="application-disclaimer">This application is a data-discovery and visualization tool. Locations, extents, models, and links must be validated against the authoritative project record before technical or contractual use.</footer>
+  </div>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <dialog id="modelModal" aria-labelledby="modelTitle"><div class="modal-card"><div class="modal-head"><h2 id="modelTitle">3D Preview</h2><button id="closeModel" class="btn">Close preview</button></div><div class="viewer-toolbar"><button class="btn small" id="resetModel">Reset view</button><button class="btn small" id="fullModel">Fullscreen</button><span>Drag to orbit · right-drag / two fingers to pan · scroll / pinch to zoom</span></div><div id="viewerHost" class="viewer"></div><div id="modelState" class="viewer-state" role="status"></div><p class="viewer-note">Visualization derivative. Refer to the authoritative survey, point-cloud, CAD, GIS, or project record for technical use.</p></div></dialog>
+</body>
+</html>
