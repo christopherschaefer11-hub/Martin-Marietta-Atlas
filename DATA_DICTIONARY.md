@@ -36,6 +36,7 @@ Publication classes: **Safe** = generic application metadata; **Review** = unkno
 | `publicationReviewed` | boolean; false | Human-approved publication of this exact record for this audience. Not authentication. | Review decision |
 | `approximateCoordinateApproved` | boolean; false | Explicit permission to show sourced approximate coordinates, clearly labeled. None supplied. | Review decision |
 | `approvedResources` | object | Keys glbUrl, kmlUrl, pointCloudUrl, projectFolderUrl, siteRecordUrl; booleans default false. Requires permission and intended-target check. | Review decision |
+| `collectionEvents` | object array; `[]` | Dated collection history for the timeline. Each event: `date` (YYYY-MM-DD, YYYY-MM or YYYY), `precision` (day, file, month, quarter, year), `kind` (Field download, Report map), `label`, `files`, `reportMaps`. `file` precision means the day came from a file timestamp, not the folder name. Invalid dates are withheld and flagged. CSV stores the array as JSON. Does not set `lastCollectionDate`. | Review (session import only until approved) |
 
 ## Collection-status styling
 

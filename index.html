@@ -52,13 +52,24 @@
               <label><input type="checkbox" id="fFolder"> Project-folder resource</label>
             </div>
           </section>
-          <details class="section"><summary>Legend &amp; data quality</summary><h2>Collection status</h2><div id="legend" class="legend"></div><p class="sub">A red outline adds a verification warning without changing the status color. Purple shows requested KML geometry.</p><h2>Data quality</h2><div id="dqSummary" class="sub"></div></details>
+          <details class="section"><summary>Legend &amp; data quality</summary><h2>Collection status</h2><div id="legend" class="legend"></div><p class="sub">A red outline adds a verification warning without changing the status color. Purple shows requested KML geometry.</p><h2>Collection history</h2><p class="sub">Import the file inventory CSV (MM_File_Inventory.csv) to add dated field-download events and the timeline. Load a review JSON first to attach history to its records by Lamp project number.</p><h2>Data quality</h2><div id="dqSummary" class="sub"></div></details>
           <details class="section" id="transferPanel"><summary>Import / export</summary><div class="file-controls"><label class="btn small file-label" for="registryFile">Import JSON / CSV<input id="registryFile" type="file" accept=".json,.csv,application/json,text/csv"></label><button id="restoreRegistry" class="btn small">Restore bundled registry</button><button id="exportCsv" class="btn small">Export results CSV</button><button id="exportJson" class="btn small">Export results JSON</button></div><p class="sub" id="importHelp">Imports stay in memory until refresh; they do not change the published registry. File review also works on the hosted atlas. Choose only files approved for this browser environment; imported records are not uploaded by the application.</p></details>
           <section aria-label="Search results"><div class="results-head"><h2>Sites</h2><span id="visibleCount" class="sub" role="status" aria-live="polite"></span></div><button class="btn small" id="fitResults">Fit map to results</button><p id="noResults" class="empty" hidden>No matching sites. Clear filters or revise the search.</p><div id="siteList" class="site-list"></div></section>
         </div>
       </aside>
       <main class="map-wrap" aria-label="Atlas map and site details">
         <div id="map" aria-label="Location map" tabindex="0"></div>
+        <section id="timeline" class="timeline" aria-label="Collection history timeline" hidden>
+          <div class="tl-head">
+            <label class="tl-toggle"><input type="checkbox" id="tlOn"> Filter by collection date</label>
+            <strong id="tlLabel" class="tl-label" aria-live="polite"></strong>
+            <label class="tl-window">Window <select id="tlWindow"><option value="1">Month</option><option value="3" selected>Quarter</option><option value="12">Year</option><option value="0">All through date</option></select></label>
+            <button id="tlPlay" class="btn small" type="button" aria-pressed="false">Play</button>
+          </div>
+          <div id="tlHist" class="tl-hist" aria-hidden="true"></div>
+          <input id="tlSlider" class="tl-slider" type="range" min="0" max="0" step="1" value="0" aria-label="Timeline end month" aria-describedby="tlLabel">
+          <div class="tl-axis"><span id="tlMin"></span><span id="tlNote" class="sub">Field downloads from the file inventory. Dates marked “file date” come from file timestamps.</span><span id="tlMax"></span></div>
+        </section>
         <section id="reviewWelcome" class="review-welcome" aria-labelledby="reviewTitle" hidden><p class="eyebrow">DIRECTORY REVIEW</p><h2 id="reviewTitle">Open your site directory</h2><p>Review a JSON or CSV file from your device. It stays in this browser tab and does not change the public atlas.</p><button id="openReview" class="btn primary">Open review file</button><p class="sub">No installation needed. Refresh or restore the bundled registry to clear the session. Workbook reconciliation and publication approval are still required.</p></section>
         <div id="mapMessage" class="map-message" role="status" hidden></div>
         <section id="kmlControl" class="kml-control" aria-label="KML overlay" hidden><strong id="kmlName"></strong><p>Approximate location or extent. Not an authoritative property boundary.</p><label><input id="kmlVisible" type="checkbox" checked> Show overlay</label><button id="removeKml" class="btn small">Remove KML</button></section>

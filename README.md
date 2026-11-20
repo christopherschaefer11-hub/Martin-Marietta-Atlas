@@ -75,6 +75,19 @@ Do not geocode missing coordinates automatically. Use `null` for both latitude a
 
 For duplicates, match by Lamp project number, then MM site number, normalized site name, then city and state. A city/state match alone may be ambiguous; escalate multiple matches rather than merging. Keep a controlled reconciliation log with authoritative and alternate values, source, reason and owner. Preserve source identifiers as strings, including leading zeros. Duplicate IDs are rejected rather than overwritten. Assign a stable reviewed internal ID when source IDs are absent; never invent an official project or site number.
 
+## Collection-history timeline
+
+When any loaded record has `collectionEvents`, a timeline appears under the map: a monthly histogram of collection events, a slider, a window size (month, quarter, year, or all through the date) and **Play**. Turning on **Filter by collection date** limits the site list, map pins and exports to sites with at least one event in the window; other filters still apply. Site details list each site's history and highlight events in the window.
+
+To build history from the read-only file inventory, choose **Import JSON / CSV** and select `MM_File_Inventory.csv` produced by `MM_Discovery_Inventory.ps1`. The atlas recognizes its headers and converts it in the browser tab:
+
+- Each dated subfolder under `SURVEY\FIELD DOWNLOAD` is one field-download event. Subfolders of the same dated folder (for example D0/D1) merge.
+- Dates come from folder names (day, month name, quarter or year). Where the folder gives only a month, quarter or year, the earliest file timestamp inside that period is used and labeled “file date”. Undated folders take the earliest file timestamp.
+- Stockpile REPORT MAP PDFs are attached to the closest preceding field download within three months; otherwise they appear as Report map events.
+- Folder paths are used only to group and date files and are not kept in the records.
+
+To attach history to an existing review directory, import that JSON first, then the inventory CSV; events merge by `lampProjectNumber`, and unmatched inventory projects are added as new session records. Inventory-derived history is a lead for verification, not a source of record. Like any session import, it is not committed or published; client project history requires approval before it goes into `data/sites.js`.
+
 ## Expected CSV and JSON fields
 
 Required: `id`, `siteName`. Full field definitions are in `DATA_DICTIONARY.md`. Other fields include identifiers, address, WGS 84 coordinates, source/confidence, collection status/date, capture methods, datasets, availability, resources, flags and publication/resource approvals.
