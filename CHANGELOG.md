@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0-review — 2026-11-20
+
+- Added a collection-history timeline under the map: monthly event histogram, slider, month/quarter/year/cumulative windows, Play/Pause, and a time filter that combines with existing filters.
+- Added the optional `collectionEvents` field with date-precision handling, validation, CSV/JSON round-trip and per-site history in the detail panel.
+- The CSV import now recognizes the read-only `MM_File_Inventory.csv` and converts dated field-download folders into events in the browser tab; it merges into a loaded review directory by Lamp project number. No inventory data is committed.
+- Added 25 timeline regression assertions using synthetic folder names.
+
 ## 0.9.1-review — 2026-11-16
 
 - Added a visible Open review file entry point and browser-session review on hosted URLs; imports do not write to GitHub or a server. Unapproved bundled records remain rejected.
